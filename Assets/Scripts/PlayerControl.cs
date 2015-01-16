@@ -3,21 +3,40 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
-	public float speed = 1f;
+	private float speed = 0.1f;
+	private float move = 0.5f;
+	private float half = 0.25f;
+	private float counter;
+
+	private void Start () {
+		counter = Time.time;
+	}
 
 	private void Update () {
+
+		if ((Time.time - counter) < speed) return;
+
 		float hMove = Input.GetAxis("Horizontal");
 		float vMove = Input.GetAxis("Vertical");
 
 		if (hMove != 0) {
-			int direction = hMove > 0 ? 1 : -1;
-			transform.Translate(Vector2.right * direction * speed * Time.deltaTime);
-			transform.Translate(Vector2.up * -direction * speed * Time.deltaTime);
+			if (hMove > 0) {
+				transform.Translate(move,-half,0); // bottom right
+			} else {
+				transform.Translate(-move,half,0); // top left
+			}
+
+			counter = Time.time;
 		} else if (vMove != 0) {
-			int direction = vMove > 0 ? 1 : -1;
-			transform.Translate(Vector2.right * direction * speed * Time.deltaTime);
-			transform.Translate(Vector2.up * direction * speed * Time.deltaTime);
+			if (vMove > 0) {
+				transform.Translate(move,half,0);  // top right
+			} else {
+				transform.Translate(-move,-half,0); // bottom left
+			}
+
+			counter = Time.time;
 		}
+
 	}
 
 }
