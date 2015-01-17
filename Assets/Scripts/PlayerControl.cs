@@ -7,9 +7,13 @@ public class PlayerControl : MonoBehaviour {
 	enum Directions {NW, NE, SW, SE};
 	private Directions dir;
 
-	private bool upHill = false;
+	public Transform movementChecker;
+	public float checkerRadius = 0.1f;
+	public LayerMask hillLayer;
+
+	private bool atHill = false;
 	private float normalAngle = 2.0f;
-	private float upHillAngle = 1.2f;
+	private float atHillAngle = 1.2f;
 	
 	TilesRevealer northColl;
 	TilesRevealer westColl;
@@ -28,7 +32,9 @@ public class PlayerControl : MonoBehaviour {
 
 	private void Update () {
 
-		float angle = upHill ? upHillAngle : normalAngle;
+		float angle = atHill ? atHillAngle : normalAngle;
+
+		atHill = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, hillLayer);
 
 		float hMove = Input.GetAxis("Horizontal");
 		float vMove = Input.GetAxis("Vertical");
@@ -63,30 +69,32 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.gameObject.name == "Hill") {
-			FlipRotation();
+		string name = coll.gameObject.name;
+		if (name == "Water") {
 		}
 	}
 
 	private void ChangeDirection() {
+		string animation = "Player";
 		switch (dir) {
 		case Directions.NW:
-			anim.CrossFade("PlayerNW", 0.5f);
+			animation += "NW";
 			EnableCollidersNWSE();
 			break;
 		case Directions.SE:
-			anim.Play("PlayerSE");
+			animation += "SE";
 			EnableCollidersNWSE();
 			break;
 		case Directions.NE:
-			anim.Play("PlayerNE");
+			animation += "NE";
 			EnableCollidersNESW();
 			break;
 		case Directions.SW:
-			anim.Play("PlayerSW");
+			animation += "SW";
 			EnableCollidersNESW();
 			break;
 		}
+		anim.Play(animation);
 	}
 
 	private void EnableCollidersNWSE() {
@@ -101,10 +109,6 @@ public class PlayerControl : MonoBehaviour {
 		southColl.enabled = false;
 		westColl.enabled = true;
 		eastColl.enabled = true;
-	}
-
-	private void FlipRotation() {
-		upHill = !upHill;
 	}
 
 }
