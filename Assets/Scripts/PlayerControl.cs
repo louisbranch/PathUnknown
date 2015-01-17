@@ -8,26 +8,32 @@ public class PlayerControl : MonoBehaviour {
 	private Directions dir;
 
 	public Transform movementChecker;
-	public float checkerRadius = 0.1f;
+	public float checkerRadius = 0.05f;
 	public LayerMask hillLayer;
+	public LayerMask impassibleLayer;
 
 	private bool atHill = false;
 	private float normalAngle = 2.0f;
 	private float atHillAngle = 1.2f;
 	
-	TilesRevealer northColl;
-	TilesRevealer westColl;
-	TilesRevealer southColl;
-	TilesRevealer eastColl;
+	Transform nw;
+	Transform ne;
+	Transform se;
+	Transform sw;
+
+	private bool moveNW = true;
+	private bool moveNE = true;
+	private bool moveSE = true;
+	private bool moveSW = true;
 
 	Animator anim;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
-		northColl = transform.Find("North").GetComponent<TilesRevealer>();
-		westColl = transform.Find("West").GetComponent<TilesRevealer>();
-		southColl = transform.Find("South").GetComponent<TilesRevealer>();
-		eastColl = transform.Find("East").GetComponent<TilesRevealer>();
+		nw = transform.Find("NW");
+		ne = transform.Find("NE");
+		se = transform.Find("SE");
+		sw = transform.Find("SW");
 	}
 
 	private void Update () {
@@ -35,6 +41,11 @@ public class PlayerControl : MonoBehaviour {
 		float angle = atHill ? atHillAngle : normalAngle;
 
 		atHill = Physics2D.OverlapCircle(movementChecker.position, checkerRadius, hillLayer);
+
+		moveNW = !Physics2D.OverlapCircle(nw.position, checkerRadius, impassibleLayer);
+		moveNE = !Physics2D.OverlapCircle(ne.position, checkerRadius, impassibleLayer);
+		moveSW = !Physics2D.OverlapCircle(sw.position, checkerRadius, impassibleLayer);
+		moveSE = !Physics2D.OverlapCircle(se.position, checkerRadius, impassibleLayer);
 
 		float hMove = Input.GetAxis("Horizontal");
 		float vMove = Input.GetAxis("Vertical");
@@ -45,18 +56,18 @@ public class PlayerControl : MonoBehaviour {
 		Directions old = dir;
 
 		if (hMove != 0) {
-			if (hMove > 0) {
+			if (hMove > 0 && moveSE) {
 				transform.Translate(x,-y,0); // bottom right
 				dir = Directions.SE;
-			} else {
+			} else if (hMove < 0 && moveNW) {
 				transform.Translate(-x,y,0); // top left
 				dir = Directions.NW;
 			}
 		} else if (vMove != 0) {
-			if (vMove > 0) {
+			if (vMove > 0 && moveNE) {
 				transform.Translate(x,y,0);  // top right
 				dir = Directions.NE;
-			} else {
+			} else if (vMove < 0 && moveSW) {
 				transform.Translate(-x,-y,0); // bottom left
 				dir = Directions.SW;
 			}
@@ -98,17 +109,11 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void EnableCollidersNWSE() {
-		northColl.enabled = true;
-		southColl.enabled = true;
-		westColl.enabled = false;
-		eastColl.enabled = false;
+
 	}
 
 	private void EnableCollidersNESW() {
-		northColl.enabled = false;
-		southColl.enabled = false;
-		westColl.enabled = true;
-		eastColl.enabled = true;
+
 	}
 
 }
