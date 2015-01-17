@@ -7,6 +7,9 @@ public class PlayerControl : MonoBehaviour {
 	enum Directions {NW, NE, SW, SE};
 	private Directions dir;
 
+	private bool upHill = false;
+	private float normalAngle = 2.0f;
+	private float upHillAngle = 1.2f;
 	
 	TilesRevealer North;
 	TilesRevealer West;
@@ -22,11 +25,13 @@ public class PlayerControl : MonoBehaviour {
 
 	private void Update () {
 
+		float angle = upHill ? upHillAngle : normalAngle;
+
 		float hMove = Input.GetAxis("Horizontal");
 		float vMove = Input.GetAxis("Vertical");
 
 		float x = speed * Time.deltaTime;
-		float y = speed/2 * Time.deltaTime;
+		float y = speed/angle * Time.deltaTime;
 
 		Directions old = dir;
 
@@ -56,6 +61,12 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 
+	private void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.name == "Hill") {
+			FlipRotation();
+		}
+	}
+
 	private void ChangeColliders() {
 		switch (dir) {
 		case Directions.NW:
@@ -73,6 +84,10 @@ public class PlayerControl : MonoBehaviour {
 			East.enabled = true;
 			break;
 		}
+	}
+
+	private void FlipRotation() {
+		upHill = !upHill;
 	}
 
 }
