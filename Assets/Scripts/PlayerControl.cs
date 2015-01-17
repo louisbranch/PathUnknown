@@ -11,16 +11,19 @@ public class PlayerControl : MonoBehaviour {
 	private float normalAngle = 2.0f;
 	private float upHillAngle = 1.2f;
 	
-	TilesRevealer North;
-	TilesRevealer West;
-	TilesRevealer South;
-	TilesRevealer East;
+	TilesRevealer northColl;
+	TilesRevealer westColl;
+	TilesRevealer southColl;
+	TilesRevealer eastColl;
+
+	Animator anim;
 
 	private void Awake () {
-		North = transform.Find("North").GetComponent<TilesRevealer>();
-		West = transform.Find("West").GetComponent<TilesRevealer>();
-		South = transform.Find("South").GetComponent<TilesRevealer>();
-		East = transform.Find("East").GetComponent<TilesRevealer>();
+		anim = GetComponent<Animator>();
+		northColl = transform.Find("North").GetComponent<TilesRevealer>();
+		westColl = transform.Find("West").GetComponent<TilesRevealer>();
+		southColl = transform.Find("South").GetComponent<TilesRevealer>();
+		eastColl = transform.Find("East").GetComponent<TilesRevealer>();
 	}
 
 	private void Update () {
@@ -43,9 +46,7 @@ public class PlayerControl : MonoBehaviour {
 				transform.Translate(-x,y,0); // top left
 				dir = Directions.NW;
 			}
-		} 
-
-		if (vMove != 0) {
+		} else if (vMove != 0) {
 			if (vMove > 0) {
 				transform.Translate(x,y,0);  // top right
 				dir = Directions.NE;
@@ -56,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (dir != old) {
-			ChangeColliders();
+			ChangeDirection();
 		}
 
 	}
@@ -67,23 +68,39 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	private void ChangeColliders() {
+	private void ChangeDirection() {
 		switch (dir) {
 		case Directions.NW:
+			anim.CrossFade("PlayerNW", 0.5f);
+			EnableCollidersNWSE();
+			break;
 		case Directions.SE:
-			North.enabled = true;
-			South.enabled = true;
-			West.enabled = false;
-			East.enabled = false;
+			anim.Play("PlayerSE");
+			EnableCollidersNWSE();
 			break;
 		case Directions.NE:
+			anim.Play("PlayerNE");
+			EnableCollidersNESW();
+			break;
 		case Directions.SW:
-			North.enabled = false;
-			South.enabled = false;
-			West.enabled = true;
-			East.enabled = true;
+			anim.Play("PlayerSW");
+			EnableCollidersNESW();
 			break;
 		}
+	}
+
+	private void EnableCollidersNWSE() {
+		northColl.enabled = true;
+		southColl.enabled = true;
+		westColl.enabled = false;
+		eastColl.enabled = false;
+	}
+
+	private void EnableCollidersNESW() {
+		northColl.enabled = false;
+		southColl.enabled = false;
+		westColl.enabled = true;
+		eastColl.enabled = true;
 	}
 
 	private void FlipRotation() {
