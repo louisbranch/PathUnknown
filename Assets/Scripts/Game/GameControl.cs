@@ -63,15 +63,7 @@ public class GameControl : MonoBehaviour {
 	}
 
 	private static void SaveHighscore(int score) {
-		for (int i = 0; i < 5; i++) {
-			int current = PlayerPrefs.GetInt("highscore_" + i);
-			if (score > current) {
-				PlayerPrefs.SetInt("highscore_" + i, score);
-				score = current; // move value down the chain
-			} else if (score == current) {
-				break;
-			}
-		}
+		PlayerPrefs.SetInt("highscore", score);
 	}
 
 	private static void GameOver() {
