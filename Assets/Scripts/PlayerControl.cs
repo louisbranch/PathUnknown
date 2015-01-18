@@ -25,12 +25,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool moveNE = true;
 	private bool moveSE = true;
 	private bool moveSW = true;
-
-	private Collider2D nwColl;
-	private Collider2D neColl;
-	private Collider2D swColl;
-	private Collider2D seColl;
-
+	
 	Animator anim;
 
 	private void Awake () {
@@ -39,11 +34,6 @@ public class PlayerControl : MonoBehaviour {
 		ne = transform.Find("NE");
 		se = transform.Find("SE");
 		sw = transform.Find("SW");
-
-		nwColl = transform.Find("NWRevealer").GetComponent<EdgeCollider2D>();
-		neColl = transform.Find("NERevealer").GetComponent<EdgeCollider2D>();
-		swColl = transform.Find("SWRevealer").GetComponent<EdgeCollider2D>();
-		seColl = transform.Find("SERevealer").GetComponent<EdgeCollider2D>();
 	}
 
 	private void Update () {
@@ -100,30 +90,18 @@ public class PlayerControl : MonoBehaviour {
 		switch (dir) {
 		case Directions.NW:
 			animation += "NW";
-			EnableCollidersNWSE();
 			break;
 		case Directions.SE:
 			animation += "SE";
-			EnableCollidersNWSE();
 			break;
 		case Directions.NE:
 			animation += "NE";
-			EnableCollidersNESW();
 			break;
 		case Directions.SW:
 			animation += "SW";
-			EnableCollidersNESW();
 			break;
 		}
 		anim.Play(animation);
-	}
-
-	private void EnableCollidersNWSE() {
-
-	}
-
-	private void EnableCollidersNESW() {
-
 	}
 
 }
