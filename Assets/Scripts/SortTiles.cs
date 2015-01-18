@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 public class SortTiles : MonoBehaviour {
@@ -12,7 +11,7 @@ public class SortTiles : MonoBehaviour {
 				child.gameObject.tag = "Tile";
 				Color color = child.renderer.material.color;
 				color.a = 0f;
-				//child.renderer.material.color = color;
+				child.renderer.material.color = color;
 				child.renderer.sortingOrder = order++;
 			}
 		}
