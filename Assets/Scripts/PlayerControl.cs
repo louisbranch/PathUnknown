@@ -26,6 +26,11 @@ public class PlayerControl : MonoBehaviour {
 	private bool moveSE = true;
 	private bool moveSW = true;
 
+	private Collider2D nwColl;
+	private Collider2D neColl;
+	private Collider2D swColl;
+	private Collider2D seColl;
+
 	Animator anim;
 
 	private void Awake () {
@@ -34,6 +39,11 @@ public class PlayerControl : MonoBehaviour {
 		ne = transform.Find("NE");
 		se = transform.Find("SE");
 		sw = transform.Find("SW");
+
+		nwColl = transform.Find("NWRevealer").GetComponent<EdgeCollider2D>();
+		neColl = transform.Find("NERevealer").GetComponent<EdgeCollider2D>();
+		swColl = transform.Find("SWRevealer").GetComponent<EdgeCollider2D>();
+		seColl = transform.Find("SERevealer").GetComponent<EdgeCollider2D>();
 	}
 
 	private void Update () {

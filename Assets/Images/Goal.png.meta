@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: a6f67a220be3c456ca792ab7d4fb0dbb
+guid: 9e6cf59933feb41379c4d2fa9d02233f
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Level1_V3_with_houses
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -23,7 +22,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 1024
   textureSettings:
     filterMode: -1
     aniso: -1
