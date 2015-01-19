@@ -28,12 +28,15 @@ public class PlayerControl : MonoBehaviour {
 	
 	Animator anim;
 
+	TimerDisplay timer;
+
 	private void Awake () {
 		anim = GetComponent<Animator>();
 		nw = transform.Find("NW");
 		ne = transform.Find("NE");
 		se = transform.Find("SE");
 		sw = transform.Find("SW");
+		timer = GetComponent<TimerDisplay>();
 	}
 
 	private void Update () {
@@ -81,7 +84,9 @@ public class PlayerControl : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D coll) {
 		string name = coll.gameObject.name;
-		if (name == "Water") {
+		if (name == "Goal") {
+			Debug.Log ("THE END");
+			GameControl.WinLevel(timer.FinalTime());
 		}
 	}
 
