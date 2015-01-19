@@ -10,11 +10,13 @@ public class TimerDisplay : MonoBehaviour {
 	public AudioClip death;
 
 	private AudioSource aSource;
+	private PlayerControl player;
 
 	public int timer = 60;
 	private float counter = 0;
 	
 	private void Awake() {
+		player = GetComponent<PlayerControl>();
 		aSource = GetComponent<AudioSource>();
 	}
 
@@ -39,6 +41,7 @@ public class TimerDisplay : MonoBehaviour {
 			gui.color = new Color(1f, 0, 0);
 			aSource.PlayOneShot(hurry);
 		} else if (timer == 0) {
+			player.dead = true;
 			timeOver.enabled = true;
 			aSource.PlayOneShot(death);
 		} else if (timer < 0) {

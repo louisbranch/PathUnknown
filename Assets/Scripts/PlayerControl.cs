@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviour {
 
 	public AudioClip win;
 
+	public bool dead = false;
+
 	private bool atHill = false;
 	private float normalAngle = 2.0f;
 	private float atHillAngle = 1.2f;
@@ -87,7 +89,7 @@ public class PlayerControl : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D coll) {
 		string name = coll.gameObject.name;
-		if (name == "Goal") {
+		if (name == "Goal" && !dead) {
 			aSource.PlayOneShot(win);
 			GameControl.WinLevel(timer.FinalTime());
 		}
