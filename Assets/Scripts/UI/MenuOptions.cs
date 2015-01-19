@@ -16,6 +16,11 @@ public class MenuOptions : MonoBehaviour {
 		Application.LoadLevel("Level01");
 	}
 
+	public void MainMenu () {
+		aSource.PlayOneShot(click);
+		Application.LoadLevel("Menu");
+	}
+
 	public void QuitGame () {
 		aSource.PlayOneShot(click);
 		Application.Quit();

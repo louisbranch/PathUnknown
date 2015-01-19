@@ -36,6 +36,7 @@ public class TimerDisplay : MonoBehaviour {
 		}
 
 		if (timer == 10) {
+			gui.color = new Color(1f, 0, 0);
 			aSource.PlayOneShot(hurry);
 		} else if (timer == 0) {
 			timeOver.enabled = true;
