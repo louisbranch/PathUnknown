@@ -5,19 +5,19 @@ public class MenuOptions : MonoBehaviour {
 
 	public AudioClip click;
 
-	AudioSource audio;
+	AudioSource aSource;
 
 	private void Awake() {
-		audio = GetComponent<AudioSource>();
+		aSource = GetComponent<AudioSource>();
 	}
 
 	public void StartGame () {
-		audio.PlayOneShot(click);
+		aSource.PlayOneShot(click);
 		Application.LoadLevel("Level01");
 	}
 
 	public void QuitGame () {
-		audio.PlayOneShot(click);
+		aSource.PlayOneShot(click);
 		Application.Quit();
 	}
 

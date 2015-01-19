@@ -41,13 +41,14 @@
 -define:ENABLE_PROFILER
 -define:UNITY_EDITOR
 -define:UNITY_EDITOR_OSX
--define:UNITY_PRO_LICENSE
+'Assets/Scripts/FadeTiles.cs'
 'Assets/Scripts/Game/GameControl.cs'
 'Assets/Scripts/Game/SplashScreen.cs'
 'Assets/Scripts/PlayerControl.cs'
 'Assets/Scripts/SortTiles.cs'
 'Assets/Scripts/TileFader.cs'
 'Assets/Scripts/TilesRevealer.cs'
+'Assets/Scripts/UI/HighscoreDisplay.cs'
 'Assets/Scripts/UI/LivesDisplay.cs'
 'Assets/Scripts/UI/MenuOptions.cs'
 'Assets/Scripts/UI/TimerDisplay.cs'

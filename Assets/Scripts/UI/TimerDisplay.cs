@@ -3,21 +3,19 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class TimerDisplay : MonoBehaviour {
-
+	
+	public Text gui;
+	public Text timeOver;
 	public AudioClip hurry;
 	public AudioClip death;
 
-	public Text gui;
-	private AudioSource audio;
+	private AudioSource aSource;
 
-	private int timer = 60;
+	public int timer = 60;
 	private float counter = 0;
-
-	private bool hurryUp = false;
-
+	
 	private void Awake() {
-		gui = GetComponent<Text>();
-		audio = GetComponent<AudioSource>();
+		aSource = GetComponent<AudioSource>();
 	}
 
 	private void Start() {
@@ -27,24 +25,26 @@ public class TimerDisplay : MonoBehaviour {
 	private void Update () {
 		float now = Time.time;
 
-		if ((now - counter) > 1f) {
-			--timer;
+		if ((now - counter) < 1f) {
+			return;
+		}
+
+		--timer;
+
+		if (timer >= 0) {
 			gui.text = FormatTime(timer);
-			counter = now;
 		}
 
-		if (timer <= 10 && !hurryUp) {
-			audio.PlayOneShot(hurry);
-			hurryUp = true;
-		}
-
-		if (timer == 0) {
-			audio.PlayOneShot(death);
-		}
-
-		if (timer < 0) {
+		if (timer == 10) {
+			aSource.PlayOneShot(hurry);
+		} else if (timer == 0) {
+			timeOver.enabled = true;
+			aSource.PlayOneShot(death);
+		} else if (timer < 0) {
 			GameControl.LifeLost();
 		}
+
+		counter = now;
 	}
 
 	public int FinalTime() {

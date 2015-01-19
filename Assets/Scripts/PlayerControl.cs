@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour {
 	public LayerMask hillLayer;
 	public LayerMask impassibleLayer;
 
+	public AudioClip win;
+
 	private bool atHill = false;
 	private float normalAngle = 2.0f;
 	private float atHillAngle = 1.2f;
@@ -27,16 +29,17 @@ public class PlayerControl : MonoBehaviour {
 	private bool moveSW = true;
 	
 	Animator anim;
-
+	AudioSource aSource;
 	TimerDisplay timer;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
+		aSource = GetComponent<AudioSource>();
+		timer = GetComponent<TimerDisplay>();
 		nw = transform.Find("NW");
 		ne = transform.Find("NE");
 		se = transform.Find("SE");
 		sw = transform.Find("SW");
-		timer = GetComponent<TimerDisplay>();
 	}
 
 	private void Update () {
@@ -85,12 +88,13 @@ public class PlayerControl : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D coll) {
 		string name = coll.gameObject.name;
 		if (name == "Goal") {
-			Debug.Log ("THE END");
+			aSource.PlayOneShot(win);
 			GameControl.WinLevel(timer.FinalTime());
 		}
 	}
 
 	private void ChangeDirection() {
+		//TODO include up and down hill animations
 		string animation = "Player";
 		switch (dir) {
 		case Directions.NW:
