@@ -46,18 +46,18 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\FadeTiles.cs" />
      <Compile Include="Assets\Scripts\Game\GameControl.cs" />
      <Compile Include="Assets\Scripts\Game\SplashScreen.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
-     <Compile Include="Assets\Scripts\SortTiles.cs" />
-     <Compile Include="Assets\Scripts\TileFader.cs" />
-     <Compile Include="Assets\Scripts\TilesRevealer.cs" />
+     <Compile Include="Assets\Scripts\Tiles\FadeTiles.cs" />
+     <Compile Include="Assets\Scripts\Tiles\SortTiles.cs" />
+     <Compile Include="Assets\Scripts\Tiles\TileFader.cs" />
+     <Compile Include="Assets\Scripts\Tiles\TilesRevealer.cs" />
+     <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\UI\GameOverDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\HighscoreDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\LivesDisplay.cs" />
      <Compile Include="Assets\Scripts\UI\MenuOptions.cs" />
-     <Compile Include="Assets\Scripts\UI\TimerDisplay.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

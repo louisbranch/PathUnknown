@@ -12,9 +12,7 @@ public class PlayerControl : MonoBehaviour {
 	public LayerMask hillLayer;
 	public LayerMask impassibleLayer;
 
-	public AudioClip win;
-
-	public bool dead = false;
+	[HideInInspector] public bool paused = false;
 
 	private bool atHill = false;
 	private float normalAngle = 2.0f;
@@ -31,13 +29,11 @@ public class PlayerControl : MonoBehaviour {
 	private bool moveSW = true;
 	
 	Animator anim;
-	AudioSource aSource;
-	TimerDisplay timer;
+	Timer timer;
 
 	private void Awake () {
 		anim = GetComponent<Animator>();
-		aSource = GetComponent<AudioSource>();
-		timer = GetComponent<TimerDisplay>();
+		timer = GetComponent<Timer>();
 		nw = transform.Find("NW");
 		ne = transform.Find("NE");
 		se = transform.Find("SE");
@@ -45,6 +41,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void Update () {
+		if (paused) return;
 
 		float angle = atHill ? atHillAngle : normalAngle;
 
@@ -89,9 +86,9 @@ public class PlayerControl : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D coll) {
 		string name = coll.gameObject.name;
-		if (name == "Goal" && !dead) {
-			aSource.PlayOneShot(win);
-			GameControl.WinLevel(timer.FinalTime());
+		if (name == "Goal") {
+			paused = true;
+			timer.WinGame();
 		}
 	}
 
