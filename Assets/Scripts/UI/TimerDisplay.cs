@@ -9,6 +9,8 @@ public class TimerDisplay : MonoBehaviour {
 	public AudioClip hurry;
 	public AudioClip death;
 
+	public GameObject tiles;
+
 	private AudioSource aSource;
 	private PlayerControl player;
 
@@ -37,15 +39,16 @@ public class TimerDisplay : MonoBehaviour {
 			gui.text = FormatTime(timer);
 		}
 
-		if (timer == 10) {
-			gui.color = new Color(1f, 0, 0);
-			aSource.PlayOneShot(hurry);
-		} else if (timer == 0) {
-			player.dead = true;
-			timeOver.enabled = true;
-			aSource.PlayOneShot(death);
-		} else if (timer < 0) {
+		switch (timer) {
+		case 10:
+			Hurry();
+			break;
+		case 0:
+			TimeUp();
+			break;
+		case -3:
 			GameControl.LifeLost();
+			break;
 		}
 
 		counter = now;
@@ -71,6 +74,20 @@ public class TimerDisplay : MonoBehaviour {
 			s = secs.ToString();
 		}
 		return m + ":" + s;
+	}
+
+	private void Hurry() {
+		gui.color = new Color(1f, 0, 0);
+		aSource.PlayOneShot(hurry);
+	}
+
+	private void TimeUp () {
+		player.dead = true;
+		timeOver.enabled = true;
+		aSource.PlayOneShot(death);
+		if (GameControl.CurrentLives() == 1) {
+			tiles.GetComponent<FadeTiles>().Reveal();
+		}
 	}
 
 }
